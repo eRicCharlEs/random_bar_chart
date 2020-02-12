@@ -1,41 +1,39 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.BorderLayout;
 
-class chart {
+public class chart extends JPanel {  
+  // JFrame 
+  static JFrame frame; 
+  
+  // JButton 
+  static JButton button;  
+
+  public void paintComponent(Graphics g) {
+    // Get the dimensions of the panel
+    int width = getWidth();
+    int height = getHeight();
+    g.setColor(Color.WHITE);
+
+    for (int x = 30; x <= width; x += 10)
+            for (int y = 30; y <= height; y += 10)
+                g.drawRect(x, y, 30, 30);
+  }
   public static void main(String[] args) {
-    // Create frame 
-    JFrame frame = new JFrame("Random Bar Chart");
+    // create a new frame to store text field and button 
+    frame = new JFrame("Random Bar Chart");
+    frame.setBackground(Color.BLACK);
 
-    // Create a container panel with a Border layout
-    JPanel container = new JPanel(new BorderLayout());
-    
-    // Create panel containing button
-    JPanel buttonPanel = new JPanel(new BorderLayout());
-    JButton redraw = new JButton("Redraw");
-    buttonPanel.add(redraw, BorderLayout.CENTER);
+    // create a new buttons 
+    button = new JButton("Redraw");
 
-    // Add panel containing the grid
-    JPanel gridPanel = new JPanel(new BorderLayout());
-    gridPanel.setBackground(Color.BLACK); // Change color of panel
 
-    // Add both components (grid, button) to container
-    container.add(gridPanel, BorderLayout.CENTER);
-    container.add(buttonPanel, BorderLayout.SOUTH);
-
-    // Add container to the form
+    chart container = new chart();
     frame.add(container, BorderLayout.CENTER);
+    // frame.add(button, BorderLayout.SOUTH);
 
-    // Resizes everything as the window shrinks and grows
-    frame.pack();
-
-    // Set initial size to.. (in pixels)
-    frame.setSize(400, 400);
-
-    // Ends the program when the window is closed
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    // Displays the window
+    // set the size of frame 
+    frame.setSize(300, 300); 
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
     frame.setVisible(true);
   }
 }
