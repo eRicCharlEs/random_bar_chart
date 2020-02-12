@@ -9,27 +9,40 @@ public class chart extends JPanel {
   static JButton button;  
 
   public void paintComponent(Graphics g) {
-    // Get the dimensions of the panel
-    int width = getWidth();
-    int height = getHeight();
+    // Set grid lines to white
     g.setColor(Color.WHITE);
 
-    for (int x = 30; x <= width; x += 10)
-            for (int y = 30; y <= height; y += 10)
-                g.drawRect(x, y, 30, 30);
+    super.paintComponent(g);
+    Graphics2D g2d = (Graphics2D) g.create();
+    // Determine size of grid
+    int size = Math.min(getWidth() - 4, getHeight() - 4) / 10;
+
+    // Draw 10x10 grid
+    int y = (getHeight() - (size * 10)) / 2;
+    for (int horz = 0; horz < 10; horz++) {
+        int x = (getWidth() - (size * 10)) / 2;
+        for (int vert = 0; vert < 10; vert++) {
+            g.drawRect(x, y, size, size);
+            x += size;
+        }
+        y += size;
+    }
+    g2d.dispose();
   }
   public static void main(String[] args) {
     // create a new frame to store text field and button 
     frame = new JFrame("Random Bar Chart");
-    frame.setBackground(Color.BLACK);
 
     // create a new buttons 
     button = new JButton("Redraw");
 
-
+    // Create new chart
     chart container = new chart();
+    container.setBackground(Color.BLACK);
+
+    // Add components to frame
     frame.add(container, BorderLayout.CENTER);
-    // frame.add(button, BorderLayout.SOUTH);
+    frame.add(button, BorderLayout.SOUTH);
 
     // set the size of frame 
     frame.setSize(300, 300); 
