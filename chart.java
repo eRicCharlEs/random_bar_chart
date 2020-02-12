@@ -1,5 +1,8 @@
 import java.awt.*;
 import javax.swing.*;
+import java.awt.geom.Line2D;
+import java.util.Random;
+import java.io.*; 
 
 public class chart extends JPanel {  
   // JFrame 
@@ -17,17 +20,31 @@ public class chart extends JPanel {
     // Determine size of grid
     int size = Math.min(getWidth() - 4, getHeight() - 4) / 10;
 
-    // Draw 10x10 grid
+    int d = getHeight();
+    int f = getWidth();
+
+    // Draw 10x10 grid using rectangles
     int y = (getHeight() - (size * 10)) / 2;
     for (int horz = 0; horz < 10; horz++) {
-        int x = (getWidth() - (size * 10)) / 2;
-        for (int vert = 0; vert < 10; vert++) {
-            g.drawRect(x, y, size, size);
-            x += size;
-        }
-        y += size;
+      int x = (getWidth() - (size * 10)) / 2;
+      for (int vert = 0; vert < 10; vert++) {
+        g.drawRect(x, y, size, size);
+        x += size;
+      }
+      y += size;
     }
     g2d.dispose();
+
+    Graphics2D g2 = (Graphics2D) g.create();
+    g2.setStroke(new BasicStroke(5f));
+    g2.setColor(Color.RED);
+
+    for (int i = 0; i < 10; i++) {
+      // (x1,y1) (x2, y2)
+      int x_coord = generateRandomNumber(getWidth());
+      int y_coord = generateRandomNumber(getHeight());
+      g2.draw(new Line2D.Double(x_coord, d, x_coord, y_coord));
+    }
   }
   public static void main(String[] args) {
     // create a new frame to store text field and button 
@@ -49,4 +66,16 @@ public class chart extends JPanel {
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
     frame.setVisible(true);
   }
+
+  public int generateRandomNumber(int size) {
+    // create instance of Random class 
+    Random rando = new Random();
+
+    // Generate random integers in range 0 to 999 
+    // set range between min and max 
+    int rand_one = rando.nextInt(size-4) + 4 ; 
+
+    return rand_one;
+  }
+
 }
