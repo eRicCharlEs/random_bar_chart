@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.geom.Line2D;
 import java.util.Random;
-import java.io.*; 
+import java.awt.event.*;
 
 public class chart extends JPanel {  
   // JFrame 
@@ -21,7 +21,6 @@ public class chart extends JPanel {
     int size = Math.min(getWidth() - 4, getHeight() - 4) / 10;
 
     int d = getHeight();
-    int f = getWidth();
 
     // Draw 10x10 grid using rectangles
     int y = (getHeight() - (size * 10)) / 2;
@@ -53,6 +52,12 @@ public class chart extends JPanel {
     // create a new buttons 
     button = new JButton("Redraw");
 
+    button.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e){
+        System.out.println("Yo Mama!");
+      }
+    });
+
     // Create new chart
     chart container = new chart();
     container.setBackground(Color.BLACK);
@@ -77,5 +82,4 @@ public class chart extends JPanel {
 
     return rand_one;
   }
-
 }
