@@ -16,33 +16,34 @@ public class chart extends JPanel {
     g.setColor(Color.WHITE);
 
     super.paintComponent(g);
-    Graphics2D g2d = (Graphics2D) g.create();
-    // Determine size of grid
-    int size = Math.min(getWidth() - 4, getHeight() - 4) / 10;
+    Graphics2D g2d = (Graphics2D)g;
 
-    int d = getHeight();
+    // Determine width and height size of grid
+    int widthSize = getWidth() / 10;
+    int heightSize = getHeight() / 10;
 
     // Draw 10x10 grid using rectangles
-    int y = (getHeight() - (size * 10)) / 2;
+    int y = 0;
+
     for (int horz = 0; horz < 10; horz++) {
-      int x = (getWidth() - (size * 10)) / 2;
+      // int x = (getWidth() - (size * 10)) / 2;
+      int x = 0;
       for (int vert = 0; vert < 10; vert++) {
-        g.drawRect(x, y, size, size);
-        x += size;
+        g.drawRect(x, y, widthSize, heightSize);
+        x += widthSize;
       }
-      y += size;
+
+      y += heightSize;
     }
-    g2d.dispose();
 
-    Graphics2D g2 = (Graphics2D) g.create();
-    g2.setStroke(new BasicStroke(5f));
-    g2.setColor(Color.RED);
-
+    g2d.setStroke(new BasicStroke(10f));
+    g2d.setColor(Color.RED);
+    
     for (int i = 0; i < 10; i++) {
       // (x1,y1) (x2, y2)
       int x_coord = generateRandomNumber(getWidth());
       int y_coord = generateRandomNumber(getHeight());
-      g2.draw(new Line2D.Double(x_coord, d, x_coord, y_coord));
+      g2d.draw(new Line2D.Double(x_coord, getHeight(), x_coord, y_coord));
     }
   }
   public static void main(String[] args) {
@@ -52,12 +53,6 @@ public class chart extends JPanel {
     // create a new buttons 
     button = new JButton("Redraw");
 
-    button.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e){
-        System.out.println("Yo Mama!");
-      }
-    });
-
     // Create new chart
     chart container = new chart();
     container.setBackground(Color.BLACK);
@@ -66,19 +61,25 @@ public class chart extends JPanel {
     frame.add(container, BorderLayout.CENTER);
     frame.add(button, BorderLayout.SOUTH);
 
+    button.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e){
+        System.out.println("Yo Mama!");
+      }
+    });
+
     // set the size of frame 
     frame.setSize(300, 300); 
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
     frame.setVisible(true);
   }
 
-  public int generateRandomNumber(int size) {
+  public int generateRandomNumber(int max) {
     // create instance of Random class 
     Random rando = new Random();
 
     // Generate random integers in range 0 to 999 
     // set range between min and max 
-    int rand_one = rando.nextInt(size-4) + 4 ; 
+    int rand_one = rando.nextInt(max); 
 
     return rand_one;
   }
